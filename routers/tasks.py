@@ -1,50 +1,51 @@
-from fastapi import APIRouter
+from fastapi import APIRouter, HTTPException, Depends
+from sqlalchemy.orm import Session
+from app.database import get_db
+from app.models.task import Task
+from app.schemas.task import TaskCreate, TaskUpdate, TaskResponse
+from typing import List
 
 router = APIRouter(
     prefix="/tasks",
     tags=["tasks"]
 )
 
-tasks = []
-task_counter = 1 # simula um ID unico
-
-@router.post('', status_code=201) # cria objetos
-def create_task(task: dict):
-    global task_counter
-    new_task = {
-        "id": task_counter,
-        "title": task['title'],
-        "done": False
-    }
-    tasks.append(new_task)
-    task_counter += 1
+@router.post('', response_model=TaskResponse, status_code=201) # cria objetos
+def create_task(task: TaskCreate, db: Session = Depends(get_db)):
+    new_task = Task(title=task.title, done=False)
+    db.add(new_task)
+    db.commit()
+    db.refresh(new_task)
     return new_task
 
-@router.get("") # sem id especifico, retorna tudo
-def get_tasks():
-    return tasks
+@router.get('', response_model=List[TaskResponse]) # sem id especifico, retorna tudo
+def get_tasks(db: Session = Depends(get_db)):
+    return db.query(Task).all()
 
-@router.get('/{task_id}') # lê informações, retorna ID especifico
-def get_task(task_id: int):
-    for task in tasks:
-        if task['id'] == task_id:
-            return task
-    return {"error": "Task not found"}
+@router.get('/{task_id}', response_model=TaskResponse) # lê informações, retorna ID especifico
+def get_task(task_id: int, db: Session = Depends(get_db)):
+    task = db.query(Task).filter(Task.id == task_id).first()
+    if not task:
+        raise HTTPException(status_code=404, detail='Task not found')
+    return task
 
-@router.put("/{task_id}") # atualiza, update
-def update_task(task_id: int, updated: dict):
-    for task in tasks:
-        if task['id'] == task_id:
-            task['title'] = updated.get('title', task['title']) # .get = método de dicts, serve pra pegar um valor sem dar errro caso a chave não exista
-            task['done'] = updated.get('done', task['done'])
-            return task
-    return {"error": "Task not found"}
+@router.put("/{task_id}", response_model=TaskResponse) # atualiza, update
+def update_task(task_id: int, updated: TaskUpdate, db: Session = Depends(get_db)):
+    task = db.query(Task).filter(Task.id == task_id).first()
+    if not task:
+        raise HTTPException(status_code=404, detail='Task not found')
+    if updated.title is not None:
+        task.title = updated.title
+    if updated.done is not None:
+        task.done = updated.done
+    db.commit()
+    db.refresh(task)
+    return task
 
 @router.delete('/{task_id}', status_code=204)
-def delete_task(task_id: int):
-    global tasks
-    for task in tasks:
-        if task['id'] == task_id:
-            tasks.remove(task)
-            return
-    return {"error": "Task not found"}
+def delete_task(task_id: int, db:Session = Depends(get_db)):
+    task = db.query(Task).filter(Task.id == task_id).first()
+    if not task:
+        raise HTTPException(status_code=404, detail='Task not found')
+    db.delete(task)
+    db.commit()
