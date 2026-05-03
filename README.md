@@ -1,10 +1,10 @@
-# 📝 Task Manager — Full Stack App
+# Task Manager — Full Stack App
 
 A full stack Task Manager built with **FastAPI** (backend) and **React** (frontend), created as a learning project to study REST APIs, FastAPI, and how frontends communicate with backends.
 
 ---
 
-## 🚀 Tech Stack
+## Tech Stack
 
 | Layer | Technology |
 |---|---|
@@ -16,7 +16,7 @@ A full stack Task Manager built with **FastAPI** (backend) and **React** (fronte
 
 ---
 
-## 📁 Project Structure
+## Project Structure
 
 ```
 TaskManager/
@@ -42,7 +42,7 @@ TaskManager/
 
 ---
 
-## ⚙️ Getting Started
+## Getting Started
 
 ### Prerequisites
 - Python 3.8+
@@ -93,7 +93,7 @@ Frontend runs at `http://localhost:5173`
 
 ---
 
-## 📡 API Endpoints
+## API Endpoints
 
 ### Tasks
 
@@ -162,7 +162,7 @@ Content-Type: application/json
 
 ---
 
-## 🧠 Concepts Learned
+## Concepts Learned
 
 - REST architecture and HTTP methods (GET, POST, PUT, DELETE)
 - FastAPI routing, path parameters, and query parameters
@@ -170,11 +170,11 @@ Content-Type: application/json
 - SQLAlchemy ORM for database operations
 - Dependency injection with `Depends`
 - CORS and how frontends communicate with backends
-- Professional project structure separation (routers, models, schemas)
+- Project structure separation (routers, models, schemas)
 
 ---
 
-## 🗺️ Possible Next Steps
+## Possible Next Steps
 
 - [ ] User authentication with JWT tokens
 - [ ] Task due dates and priorities
@@ -183,6 +183,14 @@ Content-Type: application/json
 
 ---
 
-## 👤 Author
+## Author
 
-Made by **[your name]** as a learning project.
+Made by **[Luís Silva]** as a learning project!
+
+---
+
+<div align="center">
+
+*† Seek Paleblood to transcend the Hunt †*
+
+</div>
