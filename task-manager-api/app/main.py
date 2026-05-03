@@ -9,7 +9,7 @@ app = FastAPI()
 
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=["https://localhost:3000"],         # lista de frontends permitidos a "conversar" com a API
+    allow_origins=["http://localhost:5173"],         # lista de frontends permitidos a "conversar" com a API
     allow_credentials=True,
     allow_methods=["*"], # Todos os métodos http
     allow_headers=["*"],
