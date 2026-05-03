@@ -178,8 +178,8 @@ Content-Type: application/json
 
 - [ ] User authentication with JWT tokens
 - [ ] Task due dates and priorities
-- [ ] Deploy backend (Railway, Render)
-- [ ] Deploy frontend (Vercel, Netlify)
+- [ ] Deploy backend
+- [ ] Deploy frontend
 
 ---
 
