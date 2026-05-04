@@ -1,1 +1,4 @@
 *.py linguist-language=Python
+*.css linguist-vendored=true
+*.jsx linguist-vendored=true
+task-manager-ui/* linguist-vendored=true
